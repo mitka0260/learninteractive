@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Символы химических элементов</title>
+    <link href="/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="wrapper">
+
+    <header th:insert="header :: header"></header>
+
+    <div class="row">
+
+        <div th:insert="sidebar :: sidebar-1"></div>
+
+        <div class="content">
+            <div class="inner-content">
+                <div id="questionMe">Натрий</div><br>
+                <input id="answerMe" type="text"><br>
+                <button id="checkMeAnswer">Проверить</button>
+                <div id="feedback"></div>
+            </div>
+        </div>
+
+        <!--        <div class="sidebar-2">-->
+        <!--            <div class="inner-sidebar-2">-->
+        <!--                Боковая панель #2-->
+        <!--            </div>-->
+        <!--        </div>-->
+
+    </div>
+
+    <div class="footer">
+        <div class="inner-footer">Футер</div>
+    </div>
+
+</div>
+
+<script>
+    let button = document.getElementById("checkMeAnswer");
+    let answer = document.getElementById("answerMe");
+    let question = document.getElementById("questionMe");
+    let feedback = document.getElementById("feedback");
+
+    let answerFunction = function (resultBody) {
+        feedback.innerText = resultBody;
+    }
+    button.onclick = function () {
+        console.log(answer.value);
+        fetch('/symbolsMeTest/check/' + answer.value)
+            .then(result => result.text())
+            .then(answerFunction);
+    }
+</script>
+
+</body>
+</html>
