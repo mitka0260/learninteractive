@@ -18,16 +18,24 @@ public class CheckingController {
             @RequestParam("answerMe") String answer
     ) {
 
-        for (int j = 0; j < mainController.meSymbolsArray.length; j++) {
-            if (question.equals(mainController.meSymbolsArray[j][1])) {
-                if (answer.equals(mainController.meSymbolsArray[j][0])) {
-                    return 1;
+        if (isAlpha(answer)) {
+            for (int j = 0; j < mainController.meSymbolsArray.length; j++) {
+                if (question.equals(mainController.meSymbolsArray[j][1])) {
+                    if (answer.equals(mainController.meSymbolsArray[j][0])) {
+                        return 1;
+                    }
                 }
             }
+        } else {
+            return 0;
         }
 
         return 0;
 
+    }
+
+    public boolean isAlpha(String name) {
+        return name.matches("[a-zA-Z]+");
     }
 
     @GetMapping("/symbolsMeTest/newQuestion")
