@@ -1,10 +1,11 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Символы химических элементов</title>
+    <title>Symbols</title>
     <link href="/style.css" rel="stylesheet">
 </head>
 <body>
+
 <div class="wrapper">
 
     <header th:insert="header :: header"></header>
@@ -14,43 +15,67 @@
         <div th:insert="sidebar :: sidebar-1"></div>
 
         <div class="content">
-            <div class="inner-content">
-                <div id="questionMe">Натрий</div><br>
-                <input id="answerMe" type="text"><br>
-                <button id="checkMeAnswer">Проверить</button>
-                <div id="feedback"></div>
+            <div class="inner-content" align="center">
+                <div id="questionMe" class="questionMe" name="questionMe">Sodium</div>
+                <br>
+                <input autofocus id="answerMe" class="answerMe" name="answerMe" type="text"><br>
+                <button id="checkMeAnswer" class="checkMeAnswer">Check</button>
+                <div id="statistics" class="statistics">no answers yet</div>
             </div>
         </div>
-
-        <!--        <div class="sidebar-2">-->
-        <!--            <div class="inner-sidebar-2">-->
-        <!--                Боковая панель #2-->
-        <!--            </div>-->
-        <!--        </div>-->
-
     </div>
-
     <div class="footer">
-        <div class="inner-footer">Футер</div>
+        <div class="inner-footer">
+            Баги:
+            не пишет "неверно" когда ввожу \sss<br>
+            не очень рандомно спрашивает<br>
+            как в алерт добавить правильный ответ?
+            Или как получше оформить извещение о неверном ответе?
+        </div>
     </div>
-
 </div>
-
 <script>
-    let button = document.getElementById("checkMeAnswer");
-    let answer = document.getElementById("answerMe");
-    let question = document.getElementById("questionMe");
-    let feedback = document.getElementById("feedback");
 
-    let answerFunction = function (resultBody) {
-        feedback.innerText = resultBody;
-    }
+    let question = document.getElementById("questionMe");
+    let answer = document.getElementById("answerMe");
+    let button = document.getElementById("checkMeAnswer");
+    let statistics = document.getElementById("statistics");
+
+    let rightAnswers = 0;
+    let totalAnswers = 0;
+
+    answer.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("checkMeAnswer").click();
+        }
+    });
+
     button.onclick = function () {
-        console.log(answer.value);
-        fetch('/symbolsMeTest/check/' + answer.value)
+        totalAnswers++;
+        fetch('/symbolsMeTest/check?questionMe=' + question.innerText + '&answerMe=' + answer.value)
             .then(result => result.text())
-            .then(answerFunction);
+            .then(answerCheckFunction);
     }
+
+    let answerCheckFunction = function (resultBody) {
+        document.getElementById('answerMe').value = "";
+        if (resultBody == 0) {
+            alert('Wrong');
+        } else if(resultBody == 1) {
+            rightAnswers++;
+        }
+        fetch('/symbolsMeTest/newQuestion')
+            .then(result => result.text())
+            .then(showNewQuestion);
+    }
+
+    let showNewQuestion = function (resultBody) {
+        question.innerText = resultBody;
+        statistics.innerText = rightAnswers + ' / ' + totalAnswers + ' (' + (Math.round(rightAnswers/totalAnswers*100)) + '%)';
+    }
+
+
 </script>
 
 </body>

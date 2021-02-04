@@ -2,13 +2,13 @@ package edu.learninteractive.learninteractive.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
 
     public String[][] meSymbolsArray = new String[3][2];
+    int i;
 
     @GetMapping("/")
     public String homepage(Model model) {
@@ -29,14 +29,23 @@ public class MainController {
 
     @GetMapping("/symbolsMeTest")
     public String symbolsMeTest() {
-        meSymbolsArray = new String[][]{{"Na", "Натрий"}, {"K", "Калий"}, {"Mg", "Магний"}};
-        System.out.println(meSymbolsArray[0][0]);//Na
-        System.out.println(meSymbolsArray[0][1]);//натрий
-        System.out.println(meSymbolsArray[1][0]);//K
-        System.out.println(meSymbolsArray[1][1]);//калий
-        System.out.println(meSymbolsArray[2][0]);//Mg
-        System.out.println(meSymbolsArray[2][1]);//магний
+        meSymbolsArray = new String[][]{
+                {"Au", "Gold"},
+                {"Ag", "Silver"},
+                {"Hg", "Mercury"},
+                {"Fe", "Iron"},
+                {"Cu", "Copper"},
+                {"Sn", "Tin"},
+                {"Pb", "Lead"},
+                {"Zn", "Zinc"},
+                {"Al", "Aluminium"},
+                {"Na", "Sodium"},
+                {"K", "Potassium"},
+                {"Mg", "Magnesium"}
+        };
+
         return "symbolsMeTest";
+
     }
 
     @GetMapping("/symbolsNonMeTest")

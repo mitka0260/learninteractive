@@ -102,3 +102,26 @@ a {
 #about > a:not(:last-child) {
     margin-right: 3%;
 }
+
+.questionMe {
+    padding-top: 7%;
+    font-size: xxx-large;
+    font-family: "Times New Roman", sans-serif;
+}
+
+.answerMe {
+    text-align: center;
+    font-size: 50px;
+    width: 100px;
+    height: 100px;
+}
+
+.checkMeAnswer {
+    margin-top: 30px;
+
+}
+
+.statistics {
+    padding-top: 50px;
+    font-size: 35px;
+}
