@@ -40,8 +40,12 @@ public class CheckingController {
 
     @GetMapping("/symbolsMeTest/newQuestion")
     public String symbolsMeNewQuestion() {
-        i = (int) (Math.random() * 12);
+        i = genRnd();
         return mainController.meSymbolsArray[i][1];
+    }
+
+    public int genRnd() {
+        return (int) (Math.random() * 12);
     }
 
 }
