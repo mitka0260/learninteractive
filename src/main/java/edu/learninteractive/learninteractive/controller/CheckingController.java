@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 public class CheckingController {
 
     int i;
+    int randomCheck = -1;
 
     @Autowired
     MainController mainController;
@@ -18,16 +19,16 @@ public class CheckingController {
             @RequestParam("answerMe") String answer
     ) {
 
-        if (isAlpha(answer)) {
-            for (int j = 0; j < mainController.meSymbolsArray.length; j++) {
-                if (question.equals(mainController.meSymbolsArray[j][1])) {
-                    if (answer.equals(mainController.meSymbolsArray[j][0])) {
-                        return 1;
-                    }
+        if (!isAlpha(answer)) {
+            return 0;
+        }
+
+        for (int j = 0; j < mainController.meSymbolsArray.length; j++) {
+            if (question.equals(mainController.meSymbolsArray[j][1])) {
+                if (answer.equals(mainController.meSymbolsArray[j][0])) {
+                    return 1;
                 }
             }
-        } else {
-            return 0;
         }
 
         return 0;
@@ -40,12 +41,18 @@ public class CheckingController {
 
     @GetMapping("/symbolsMeTest/newQuestion")
     public String symbolsMeNewQuestion() {
-        i = genRnd();
-        return mainController.meSymbolsArray[i][1];
+        return mainController.meSymbolsArray[genRnd()][1];
     }
 
     public int genRnd() {
-        return (int) (Math.random() * 12);
+        int random = (int) (Math.random() * 12);
+        if(random != randomCheck) {
+            randomCheck = random;
+            return random;
+        } else {
+            genRnd();
+        }
+        return 0;
     }
 
 }
