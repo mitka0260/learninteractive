@@ -7,7 +7,20 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MainController {
 
-    public String[][] meSymbolsArray = new String[3][2];
+    public static String[][] meSymbolsArray = new String[][]{
+            {"Au", "Gold"},
+            {"Ag", "Silver"},
+            {"Hg", "Mercury"},
+            {"Fe", "Iron"},
+            {"Cu", "Copper"},
+            {"Sn", "Tin"},
+            {"Pb", "Lead"},
+            {"Zn", "Zinc"},
+            {"Al", "Aluminium"},
+            {"Na", "Sodium"},
+            {"K", "Potassium"},
+            {"Mg", "Magnesium"}
+    };
     int i;
 
     @GetMapping("/")

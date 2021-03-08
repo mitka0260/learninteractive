@@ -35,10 +35,11 @@
     <div class="footer">
         <div class="inner-footer">
             Баги:
-            не пишет "неверно" когда ввожу <br>
-            не очень рандомно спрашивает<br>
-            как в алерт добавить правильный ответ?
+            не пишет "неверно" когда ввожу - encodeURI(answer.value) <br>
+            не очень рандомно спрашивает - посмотреть securerandom<br>
+            как в алерт добавить правильный ответ? - bootstrap dialog
             Или как получше оформить извещение о неверном ответе?
+            из рестконтроллера возвращаться объект, а не 0 или 1
         </div>
     </div>
 </div>
@@ -62,7 +63,7 @@
 
     button.onclick = function () {
         totalAnswers++;
-        fetch('/symbolsMeTest/check?questionMe=' + question.innerText + '&answerMe=' + answer.value)
+        fetch('/symbolsMeTest/check?questionMe=' + encodeURI(question.innerText) + '&answerMe=' + encodeURI(answer.value))
             .then(result => result.text())
             .then(answerCheckFunction);
     }
